@@ -21,6 +21,7 @@ WG-Easy Installer is a comprehensive automation script that simplifies the deplo
 - **🔐 SSL/TLS Support** - Automatic SSL certificates with Let's Encrypt
 - **🌐 Custom Domain Support** - Professional setup with your own domain
 - **👥 Advanced User Management** - Built-in client expiry system
+- **🏷️ Custom Image Tags** - Choose your preferred wg-easy version (default v15)
 - **🔧 Easy Configuration** - Modify settings without reinstalling
 - **🛡️ Security First** - No port conflicts, proper firewall handling
 - **📱 Responsive Web UI** - Modern interface for all devices
@@ -42,7 +43,7 @@ That's it! The script will guide you through the setup process.
 ### What Happens During Installation?
 
 1. **Dependency Check** - Installs required packages (Docker, Nginx, Certbot, etc.)
-2. **Configuration** - Prompts for domain, ports, and other settings
+2. **Configuration** - Prompts for wg-easy image tag, domain, and ports
 3. **SSL Setup** - Automatically configures SSL certificates if domain provided
 4. **WireGuard Deployment** - Sets up containerized WireGuard with Docker Compose
 5. **User Management** - Configures client expiry system with cron jobs
@@ -50,6 +51,9 @@ That's it! The script will guide you through the setup process.
 ---
 
 ## 🛠️ Configuration Options
+
+### Tested Versions
+This installer has been heavily tested and is fully compatible with **wg-easy v15+**. The script defaults to the `15` major tag to automatically receive minor updates and security patches while avoiding breaking changes.
 
 ### Basic Setup (HTTP)
 - **Domain**: Leave blank for IP-based access
@@ -60,6 +64,7 @@ That's it! The script will guide you through the setup process.
 ### Professional Setup (HTTPS)
 - **Domain**: Your domain (e.g., `vpn.example.com`)
 - **SSL**: Automatic Let's Encrypt certificates
+- **Proxy Setup**: Configures Nginx as a reverse proxy, and sets `INSECURE=true` in wg-easy so it can securely run behind the local Nginx proxy.
 - **Access**: `https://vpn.example.com:UI_PORT`
 
 ---
@@ -107,6 +112,11 @@ Once installed, run the script again to access the management menu:
 - **Resource Management**: Optimized container configuration
 - **Easy Updates**: Simple container version management
 
+### 🎭 AmneziaWG Support (Anti-DPI)
+- **Experimental Obfuscation**: Bypass Deep Packet Inspection (DPI) in heavily restricted networks.
+- **Interactive Setup**: The script will ask if you want to enable AmneziaWG during installation.
+- **Note**: When enabled, standard WireGuard clients will not be able to connect. All users must use the official AmneziaWG app.
+
 ---
 
 ## 🌐 Accessing Your VPN
@@ -116,6 +126,11 @@ After installation, access your VPN management interface:
 
 - **With Domain**: `https://yourdomain.com:UI_PORT`
 - **Without Domain**: `http://YOUR_IP:UI_PORT`
+
+> [!IMPORTANT]
+> **v15+ Setup Wizard:** Upon your very first login, wg-easy will prompt you with a Setup Wizard to create your admin credentials. 
+> 
+> **CRITICAL:** When the wizard asks for your "WireGuard Port", you **MUST** enter the exact same port you provided to this installation script! The script opens the physical port on your server's Docker daemon, while the wizard writes that port into your `.conf` files. If they do not match, your VPN clients will not be able to connect!
 
 ### Adding Clients
 1. Open the web interface
